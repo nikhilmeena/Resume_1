@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   ChevronLeft,
@@ -10,6 +11,8 @@ import {
   MapPin,
   Phone,
 } from 'lucide-react';
+import MS_OFFICE_LOGO from '@/assets/logos/ms-office.svg';
+import OPENSHIFT_LOGO from '@/assets/logos/openshift.svg';
 import { cn } from '@/lib/utils';
 
 const AVATAR =
@@ -17,11 +20,13 @@ const AVATAR =
 const LINKEDIN = 'https://www.linkedin.com/in/nikhil-meena26';
 const EMAIL = 'nikhilmeenaiit@gmail.com';
 const PHONE = '+91 8800487634';
+// Set your resume link here when available (e.g. PDF URL). Leave empty for now.
+const RESUME_URL = '';
 
 const NAV = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
+  { id: 'education', label: 'Education' },
   { id: 'work', label: 'Work' },
   { id: 'contact', label: 'Contact' },
 ] as const;
@@ -49,38 +54,84 @@ const SKILL_CARDS = [
   },
 ];
 
-const EXPERIENCE = [
+type Skill = {
+  label: string;
+  logo?: string;
+  fallback: string;
+};
+
+const SKILLS: Skill[] = [
+  { label: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB', fallback: 'Py' },
+  { label: 'Agile methodologies', fallback: 'Ag' },
+  { label: 'Jira', logo: 'https://cdn.simpleicons.org/jira/0052CC', fallback: 'Ji' },
+  { label: 'Dynatrace', logo: 'https://cdn.simpleicons.org/dynatrace/00EAAB', fallback: 'Dy' },
+  { label: 'Vulogx', fallback: 'Vx' },
+  { label: 'OpenShift', logo: OPENSHIFT_LOGO, fallback: 'OS' },
+  { label: 'Docker', logo: 'https://cdn.simpleicons.org/docker/2496ED', fallback: 'Do' },
+  { label: 'MS Office', logo: MS_OFFICE_LOGO, fallback: 'MS' },
+  { label: 'Prompt Engineering', fallback: 'PE' },
+  { label: 'Postman', logo: 'https://cdn.simpleicons.org/postman/FF6C37', fallback: 'PM' },
+  { label: 'Figma', logo: 'https://cdn.simpleicons.org/figma/0ACF83', fallback: 'Fg' },
+  { label: 'ChatGPT', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg', fallback: 'CG' },
+  { label: 'Cursor', fallback: 'Cu' },
+  { label: 'Visual Studio Code', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg', fallback: 'VS' },
+  { label: 'SQL', fallback: 'SQL' },
+  { label: 'REST APIs', fallback: 'API' },
+];
+
+const ICICI_FOCUS_AREAS = [
   {
-    role: 'Product Analyst (TPM Track)',
-    company: 'ICICI Bank Ltd.',
-    period: 'Jul 2022 – Present',
-    location: 'Hyderabad',
+    title: 'UI/UX Designing and User Journey',
+    description:
+      'Mapped customer journeys, created wireframes, and aligned user experience with business goals for seamless digital banking flows.',
+  },
+  {
+    title: 'Microservice Designing',
+    description:
+      'Coordinated service boundaries, API contracts, and technical requirements with engineering teams for scalable banking systems.',
+  },
+  {
+    title: 'API Testing and Integration',
+    description:
+      'Led API validation, contract testing, and integration checks to ensure reliable connectivity across channels and services.',
+  },
+  {
+    title: 'Monitoring',
+    description:
+      'Defined key metrics, dashboards, and alerting to track feature adoption, stability, and production performance.',
+  },
+  {
+    title: 'Scrum for CRs or New Development',
+    description:
+      'Managed sprint planning, change requests, and backlog refinement to deliver new features and product enhancements on time.',
   },
 ];
 
-const EXPERIENCE_BULLETS = [
-  'Led product initiatives in the Payments (Funds Transfer) module for iMobile Pay.',
-  'Spearheaded revamp of iMobile Pay focusing on payment flows and user experience.',
-  'Redesigned beneficiary onboarding, reducing user drop-offs across the funnel.',
-  'Optimized payment method selection, improving transaction success rates.',
-  'Built scheduled payments and 1-year transaction history features.',
-  'Defined PRDs, user stories, and acceptance criteria; tested APIs with Postman and JIRA.',
-];
-
-const PROJECTS = [
+const ICICI_STEP_STYLES = [
   {
-    title: 'Funds Transfer Revamp',
-    subtitle: 'iMobile Pay · End-to-end product',
-    description:
-      'Redesigned the full fund transfer journey — onboarding, payments, and history — improving UX, success rates, and system performance.',
-    gradient: 'from-violet-600/20 via-fuchsia-500/10 to-orange-400/20',
+    gradient: 'bg-gradient-to-r from-orange-500 via-amber-400 to-rose-500',
+    accent: 'bg-orange-300 text-orange-950',
+    ring: 'ring-orange-300/30',
   },
   {
-    title: 'Credit Card Management',
-    subtitle: 'User journeys & wireframes',
-    description:
-      'Designed personas, flows, and Figma wireframes to improve usability and feature discoverability through iterative design.',
-    gradient: 'from-sky-600/20 via-indigo-500/10 to-violet-400/20',
+    gradient: 'bg-gradient-to-r from-cyan-500 via-sky-400 to-indigo-600',
+    accent: 'bg-cyan-300 text-cyan-950',
+    ring: 'ring-cyan-300/30',
+  },
+  {
+    gradient: 'bg-gradient-to-r from-emerald-500 via-lime-400 to-teal-500',
+    accent: 'bg-emerald-300 text-emerald-950',
+    ring: 'ring-emerald-300/30',
+  },
+  {
+    gradient: 'bg-gradient-to-r from-fuchsia-500 via-purple-500 to-violet-600',
+    accent: 'bg-fuchsia-300 text-fuchsia-950',
+    ring: 'ring-fuchsia-300/30',
+  },
+  {
+    gradient: 'bg-gradient-to-r from-amber-500 via-orange-400 to-red-500',
+    accent: 'bg-amber-300 text-amber-950',
+    ring: 'ring-amber-300/30',
   },
 ];
 
@@ -111,7 +162,7 @@ const EDUCATION = [
   {
     degree: 'B.Tech, Chemical Engineering',
     school: 'IIT Delhi',
-    period: '2016 – 2020',
+    period: '2015 – 2019',
   },
 ];
 
@@ -185,10 +236,21 @@ function NavBar() {
         </button>
 
         <a
-          href="#contact"
-          className="hidden rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 md:inline-flex"
+          href={RESUME_URL || '#'}
+          download={!!RESUME_URL}
+          aria-label="Download resume"
+          onClick={(e) => {
+            if (!RESUME_URL) {
+              e.preventDefault();
+              // Placeholder behavior until resume link is provided
+              // You can replace this with a tooltip or modal later
+              alert('Resume link not set yet. Add RESUME_URL in the source to enable download.');
+            }
+          }}
+          className="hidden inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 md:inline-flex"
         >
-          Hire me
+          <Download className="h-4 w-4" />
+          Resume
         </a>
       </div>
 
@@ -221,6 +283,38 @@ function Marquee({ items }: { items: string[] }) {
             className="whitespace-nowrap text-sm font-medium tracking-wide text-neutral-400 uppercase"
           >
             {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SkillMarquee({ items }: { items: Skill[] }) {
+  const [isPaused, setIsPaused] = React.useState(false);
+  const doubled = [...items, ...items];
+  return (
+    <div 
+      className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white py-5 shadow-sm"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className={`marquee-track flex w-max items-center gap-6 px-6 ${isPaused ? 'paused' : ''}`}>
+        {doubled.map((item, i) => (
+          <span
+            key={`${item.label}-${i}`}
+            className="inline-flex items-center gap-3 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-medium text-neutral-700 shadow-sm"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
+              {item.logo ? (
+                <img src={item.logo} alt={`${item.label} logo`} className="h-5 w-5 object-contain" />
+              ) : (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-900 text-[10px] font-semibold text-white">
+                  {item.fallback}
+                </span>
+              )}
+            </span>
+            {item.label}
           </span>
         ))}
       </div>
@@ -262,19 +356,29 @@ function TestimonialCarousel() {
 }
 
 export function Portfolio() {
-  const [formState, setFormState] = React.useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [formState, setFormState] = React.useState({ name: '', email: '', message: '' });
+  const [activeFocusIndex, setActiveFocusIndex] = React.useState(0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = encodeURIComponent('Message from website');
     const body = encodeURIComponent(
       `Name: ${formState.name}\nEmail: ${formState.email}\n\n${formState.message}`,
     );
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(formState.subject || 'Portfolio inquiry')}&body=${body}`;
+    const mailto = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+
+    // Create and click a hidden anchor to trigger the user's mail client reliably
+    try {
+      const a = document.createElement('a');
+      a.href = mailto;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      // Fallback to location assignment
+      window.location.href = mailto;
+    }
   };
 
   return (
@@ -288,7 +392,7 @@ export function Portfolio() {
             <p className="mb-4 text-sm text-neutral-500">🖐️ Hello, I am</p>
             <h1 className="max-w-3xl text-4xl leading-[1.1] font-bold tracking-tight text-neutral-900 md:text-6xl lg:text-7xl">
               Technical Product Manager &{' '}
-              <span className="text-neutral-400">payments specialist</span>
+              <span className="text-neutral-400">specializing in payments and fintech.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
               Technical Product Manager with experience in fintech payments and mobile banking.
@@ -296,13 +400,6 @@ export function Portfolio() {
               development with cross-functional teams.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
-              >
-                Hire me
-                <ArrowRight className="h-4 w-4" />
-              </a>
               <a
                 href="#about"
                 className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:border-neutral-400"
@@ -322,7 +419,7 @@ export function Portfolio() {
               <img src={AVATAR} alt="Nikhil Kumar Meena" className="h-full w-full object-cover object-top" />
             </div>
             <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-neutral-200 bg-white px-5 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
-              3+ years in product · IIT alum
+              4+ years in product management
             </div>
           </motion.div>
         </div>
@@ -341,15 +438,6 @@ export function Portfolio() {
               turning complex payment flows into intuitive experiences for millions of users.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href={LINKEDIN}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-5 py-2.5 text-sm font-medium transition hover:border-neutral-400"
-              >
-                <Download className="h-4 w-4" />
-                View on LinkedIn
-              </a>
               <a
                 href="#work"
                 className="inline-flex items-center gap-2 rounded-full bg-neutral-100 px-5 py-2.5 text-sm font-medium transition hover:bg-neutral-200"
@@ -385,31 +473,18 @@ export function Portfolio() {
         </motion.div>
       </section>
 
-      {/* Experience */}
-      <section id="experience" className="bg-neutral-950 py-20 text-white md:py-28">
+      {/* Education */}
+      <section id="education" className="bg-neutral-950 py-20 text-white md:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <motion.div {...fadeUp}>
-            <p className="text-sm font-medium tracking-widest text-neutral-500 uppercase">Experience</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">In a previous life</h2>
+            <p className="text-sm font-medium tracking-widest text-neutral-500 uppercase">Education</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Academic background</h2>
             <p className="mt-4 max-w-xl text-neutral-400">
-              Product leadership in payments and mobile banking — plus engineering foundations from IIT.
+              Engineering degrees from India’s premier institutes, highlighting IIT Kanpur and IIT Delhi.
             </p>
           </motion.div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {EXPERIENCE.map((job) => (
-              <motion.div
-                key={job.company}
-                {...fadeUp}
-                className="rounded-2xl border border-neutral-800 bg-neutral-900 p-8"
-              >
-                <p className="text-sm text-neutral-500">{job.period}</p>
-                <h3 className="mt-2 text-2xl font-semibold">{job.role}</h3>
-                <p className="mt-1 text-neutral-400">
-                  At {job.company} · {job.location}
-                </p>
-              </motion.div>
-            ))}
             {EDUCATION.map((edu) => (
               <motion.div
                 key={edu.school}
@@ -417,80 +492,107 @@ export function Portfolio() {
                 className="rounded-2xl border border-neutral-800 bg-neutral-900/60 p-8"
               >
                 <p className="text-sm text-neutral-500">{edu.period}</p>
-                <h3 className="mt-2 text-xl font-semibold">{edu.degree}</h3>
+                <h3 className="mt-2 text-2xl font-semibold">{edu.degree}</h3>
                 <p className="mt-1 text-neutral-400">{edu.school}</p>
               </motion.div>
             ))}
           </div>
-
-          <motion.ul
-            {...fadeUp}
-            className="mt-10 grid gap-3 sm:grid-cols-2"
-          >
-            {EXPERIENCE_BULLETS.map((bullet) => (
-              <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-neutral-300">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
-                {bullet}
-              </li>
-            ))}
-          </motion.ul>
         </div>
       </section>
 
       {/* Work */}
       <section id="work" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <motion.div {...fadeUp} className="text-center">
+        <motion.div {...fadeUp} className="text-center mx-auto max-w-3xl">
           <p className="text-sm font-medium tracking-widest text-neutral-400 uppercase">Portfolio</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Showcasing my best work</h2>
+          <h2 className="mt-4 text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
+            PRODUCT MANAGER
+          </h2>
+          <p className="mt-2 text-xl font-semibold text-neutral-900">ICICI Bank Ltd</p>
+          <p className="mt-3 text-sm text-neutral-500">Hyderabad · July 2022 – Present</p>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-neutral-500">
+            Selected product work focused on payments, user experience, and end-to-end delivery across mobile banking.
+          </p>
         </motion.div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {PROJECTS.map((project, i) => (
+        <motion.div {...fadeUp} className="mt-16">
+          <div className="relative">
+            <div className="absolute inset-x-10 -top-6 h-24 rounded-[2rem] bg-fuchsia-500/20 blur-3xl" />
+            <div className="absolute inset-x-10 -bottom-6 h-24 rounded-[2rem] bg-cyan-500/20 blur-3xl" />
+
             <motion.article
-              key={project.title}
               {...fadeUp}
-              transition={{ delay: i * 0.1 }}
-              className="group overflow-hidden rounded-3xl border border-neutral-200"
+              className={cn(
+                'relative overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1 hover:shadow-2xl',
+                ICICI_STEP_STYLES[activeFocusIndex].gradient,
+                'border-transparent shadow-2xl',
+              )}
             >
-              <div
-                className={cn(
-                  'flex aspect-[16/10] items-end bg-gradient-to-br p-8',
-                  project.gradient,
-                )}
-              >
-                <div>
-                  <p className="text-xs font-medium tracking-widest text-neutral-500 uppercase">
-                    {project.subtitle}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-bold">{project.title}</h3>
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.9),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.4),_transparent_30%)]" />
+              <div className="relative p-10 sm:p-12">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-medium tracking-widest text-white/80 uppercase">Step {activeFocusIndex + 1} of {ICICI_FOCUS_AREAS.length}</p>
+                    <h3 className="mt-4 text-3xl font-bold text-white">{ICICI_FOCUS_AREAS[activeFocusIndex].title}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <p className="text-neutral-600">{project.description}</p>
+
+                <p className="mt-6 max-w-3xl text-base leading-8 text-white/90">
+                  {ICICI_FOCUS_AREAS[activeFocusIndex].description}
+                </p>
               </div>
             </motion.article>
-          ))}
-        </div>
+          </div>
 
-        <motion.div {...fadeUp} className="mt-16 overflow-hidden rounded-3xl bg-neutral-100 py-4">
-          <div className="marquee-track flex w-max gap-8">
-            {[...PROJECTS, ...PROJECTS].map((p, i) => (
-              <span key={i} className="whitespace-nowrap text-2xl font-bold text-neutral-300">
-                {p.title} ·
-              </span>
-            ))}
+          <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => setActiveFocusIndex((index) => Math.max(index - 1, 0))}
+              disabled={activeFocusIndex === 0}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/90 text-neutral-900 shadow-lg transition hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {ICICI_FOCUS_AREAS.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setActiveFocusIndex(index)}
+                  className={cn(
+                    'h-3 w-3 rounded-full transition-all duration-200',
+                    index === activeFocusIndex
+                      ? ICICI_STEP_STYLES[index].accent
+                      : 'bg-white/70 hover:bg-white',
+                  )}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveFocusIndex((index) => Math.min(index + 1, ICICI_FOCUS_AREAS.length - 1))}
+              disabled={activeFocusIndex === ICICI_FOCUS_AREAS.length - 1}
+              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/90 text-neutral-900 shadow-lg transition hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
           </div>
         </motion.div>
+
       </section>
 
-      {/* Achievements */}
-      <section className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
-        <motion.div {...fadeUp}>
-          <p className="text-sm font-medium tracking-widest text-neutral-400 uppercase">Recognition</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Achievements & highlights</h2>
+      {/* Skills */}
+      <section id="skills" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
+        <motion.div {...fadeUp} className="text-center mx-auto max-w-3xl">
+          <p className="text-sm font-medium tracking-widest text-neutral-400 uppercase">Skills</p>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-neutral-500">
+            A broad technical and delivery skillset for fintech, API integration, observability, and modern product workflows.
+          </p>
         </motion.div>
-        <motion.div {...fadeUp} className="mt-10">
-          <TestimonialCarousel />
+
+        <motion.div {...fadeUp} className="mt-12">
+          <SkillMarquee items={SKILLS} />
         </motion.div>
       </section>
 
@@ -542,7 +644,7 @@ export function Portfolio() {
                   className="flex items-center gap-3 text-neutral-700 transition hover:text-neutral-900"
                 >
                   <LinkedInIcon className="h-5 w-5 text-neutral-400" />
-                  LinkedIn
+                  www.linkedin.com/in/nikhil-meena26
                 </a>
               </li>
             </ul>
@@ -563,6 +665,7 @@ export function Portfolio() {
                   className="mt-1.5 w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-neutral-400"
                 />
               </label>
+
               <label className="block">
                 <span className="text-sm font-medium text-neutral-700">Email address</span>
                 <input
@@ -573,19 +676,12 @@ export function Portfolio() {
                   className="mt-1.5 w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-neutral-400"
                 />
               </label>
-              <label className="block">
-                <span className="text-sm font-medium text-neutral-700">Subject</span>
-                <input
-                  value={formState.subject}
-                  onChange={(e) => setFormState((s) => ({ ...s, subject: e.target.value }))}
-                  className="mt-1.5 w-full rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-neutral-400"
-                />
-              </label>
+
               <label className="block">
                 <span className="text-sm font-medium text-neutral-700">Message</span>
                 <textarea
                   required
-                  rows={4}
+                  rows={6}
                   value={formState.message}
                   onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))}
                   className="mt-1.5 w-full resize-none rounded-xl border border-neutral-200 px-4 py-3 text-sm outline-none focus:border-neutral-400"
