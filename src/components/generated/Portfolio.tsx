@@ -91,7 +91,7 @@ const ICICI_FOCUS_AREAS = [
       'Coordinated service boundaries, API contracts, and technical requirements with engineering teams for scalable banking systems.',
   },
   {
-    title: 'API Testing and Integration',
+    title: 'Testing and Integration',
     description:
       'Led API validation, contract testing, and integration checks to ensure reliable connectivity across channels and services.',
   },
@@ -532,7 +532,7 @@ export function Portfolio() {
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <p className="text-sm font-medium tracking-widest text-white/80 uppercase">Step {activeFocusIndex + 1} of {ICICI_FOCUS_AREAS.length}</p>
-                    <h3 className="mt-4 text-3xl font-bold text-white">{ICICI_FOCUS_AREAS[activeFocusIndex].title}</h3>
+                    <h3 className="mt-4 text-3xl font-bold leading-relaxed text-white">{ICICI_FOCUS_AREAS[activeFocusIndex].title}</h3>
                   </div>
                 </div>
 
@@ -580,6 +580,37 @@ export function Portfolio() {
           </div>
         </motion.div>
 
+      </section>
+
+      {/* Videos */}
+      <section className="bg-neutral-50 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-6">
+          <motion.div {...fadeUp} className="text-center mx-auto max-w-3xl mb-12">
+            <p className="text-sm font-medium tracking-widest text-neutral-400 uppercase">Featured</p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">iMobile Pay . Send Money </h2>
+          </motion.div>
+
+          <motion.div {...fadeUp} className="grid gap-6 md:grid-cols-2">
+            {[
+              { id: 'XXBUIndC2M4', title: 'Video 1' },
+              { id: 'w5ewSWDDHs4', title: 'Video 2' },
+              { id: 'FlB4LBNrWtc', title: 'Video 3' },
+              { id: 'S3C4MAwztN0', title: 'Video 4' },
+            ].map((video) => (
+              <div key={video.id} className="overflow-hidden rounded-2xl bg-white shadow-lg">
+                <div className="relative w-full bg-black" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    className="absolute inset-0 h-full w-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Skills */}
