@@ -182,17 +182,8 @@ img.broken-image-fallback {
   }
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  /* CSS animation removed - now controlled by React state */
 }
 
 .marquee-track.paused {

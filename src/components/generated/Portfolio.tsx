@@ -273,37 +273,231 @@ function NavBar() {
 }
 
 function Marquee({ items }: { items: string[] }) {
+  const [offset, setOffset] = React.useState(0);
+  const [isControlled, setIsControlled] = React.useState(false);
+  const [touchStart, setTouchStart] = React.useState<number | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const autoScrollRef = React.useRef<number>(0);
+  const animationStartRef = React.useRef<number>(0);
+
+  const itemWidth = 150;
+  const maxOffset = items.length * itemWidth;
+  const animationDuration = 28000; // 28 seconds like original CSS animation
+
+  // Auto-scroll animation loop
+  React.useEffect(() => {
+    if (isControlled) return; // Don't auto-scroll while being controlled
+
+    const startTime = Date.now();
+    let animationFrameId: number;
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = (elapsed % animationDuration) / animationDuration;
+      setOffset((progress * maxOffset) % maxOffset);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isControlled, maxOffset, animationDuration]);
+
+  const moveForward = (distance: number) => {
+    setOffset((prev) => {
+      const newOffset = prev + distance;
+      return newOffset > maxOffset ? newOffset - maxOffset : newOffset;
+    });
+  };
+
+  const moveBackward = (distance: number) => {
+    setOffset((prev) => {
+      const newOffset = prev - distance;
+      return newOffset < 0 ? maxOffset + newOffset : newOffset;
+    });
+  };
+
+  // Handle touch start
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsControlled(true);
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  // Handle touch move (drag)
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const currentX = e.touches[0].clientX;
+    const diff = touchStart - currentX;
+
+    if (Math.abs(diff) > 5) {
+      if (diff > 0) {
+        moveForward(diff * 0.5);
+      } else {
+        moveBackward(Math.abs(diff) * 0.5);
+      }
+      setTouchStart(currentX);
+    }
+  };
+
+  // Handle touch end - resume auto-scroll
+  const handleTouchEnd = () => {
+    setTouchStart(null);
+    setIsControlled(false);
+  };
+
+  // Trackpad/mouse wheel support
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    setIsControlled(true);
+
+    if (e.deltaX > 0) {
+      moveForward(Math.abs(e.deltaX) * 0.5);
+    } else if (e.deltaX < 0) {
+      moveBackward(Math.abs(e.deltaX) * 0.5);
+    }
+
+    // Resume auto-scroll after 2 seconds of inactivity
+    if (containerRef.current) {
+      clearTimeout((containerRef.current as any).__wheelTimeout);
+      (containerRef.current as any).__wheelTimeout = setTimeout(() => {
+        setIsControlled(false);
+      }, 2000);
+    }
+  };
+
   const doubled = [...items, ...items];
+
   return (
     <div className="overflow-hidden border-y border-neutral-200 bg-neutral-50 py-5">
-      <div className="marquee-track flex w-max gap-12">
-        {doubled.map((item, i) => (
-          <span
-            key={`${item}-${i}`}
-            className="whitespace-nowrap text-sm font-medium tracking-wide text-neutral-400 uppercase"
-          >
-            {item}
-          </span>
-        ))}
+      <div 
+        ref={containerRef}
+        className="relative overflow-hidden cursor-grab active:cursor-grabbing"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
+      >
+        <div
+          className="flex w-max gap-12 transition-transform duration-100 ease-out"
+          style={{ transform: `translateX(-${offset}px)` }}
+        >
+          {doubled.map((item, i) => (
+            <span
+              key={`${item}-${i}`}
+              className="whitespace-nowrap text-sm font-medium tracking-wide text-neutral-400 uppercase pointer-events-none select-none"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 function SkillMarquee({ items }: { items: Skill[] }) {
-  const [isPaused, setIsPaused] = React.useState(false);
+  const [offset, setOffset] = React.useState(0);
+  const [isControlled, setIsControlled] = React.useState(false);
+  const [touchStart, setTouchStart] = React.useState<number | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const itemWidth = 220; // Approximate width of each skill badge
+  const maxOffset = items.length * itemWidth;
+  const animationDuration = 28000;
+
+  // Auto-scroll animation loop
+  React.useEffect(() => {
+    if (isControlled) return;
+
+    const startTime = Date.now();
+    let animationFrameId: number;
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = (elapsed % animationDuration) / animationDuration;
+      setOffset((progress * maxOffset) % maxOffset);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isControlled, maxOffset, animationDuration]);
+
+  const moveForward = (distance: number) => {
+    setOffset((prev) => {
+      const newOffset = prev + distance;
+      return newOffset > maxOffset ? newOffset - maxOffset : newOffset;
+    });
+  };
+
+  const moveBackward = (distance: number) => {
+    setOffset((prev) => {
+      const newOffset = prev - distance;
+      return newOffset < 0 ? maxOffset + newOffset : newOffset;
+    });
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsControlled(true);
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const currentX = e.touches[0].clientX;
+    const diff = touchStart - currentX;
+
+    if (Math.abs(diff) > 5) {
+      if (diff > 0) {
+        moveForward(diff * 0.5);
+      } else {
+        moveBackward(Math.abs(diff) * 0.5);
+      }
+      setTouchStart(currentX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setTouchStart(null);
+    setIsControlled(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    setIsControlled(true);
+
+    if (e.deltaX > 0) {
+      moveForward(Math.abs(e.deltaX) * 0.5);
+    } else if (e.deltaX < 0) {
+      moveBackward(Math.abs(e.deltaX) * 0.5);
+    }
+
+    if (containerRef.current) {
+      clearTimeout((containerRef.current as any).__wheelTimeout);
+      (containerRef.current as any).__wheelTimeout = setTimeout(() => {
+        setIsControlled(false);
+      }, 2000);
+    }
+  };
+
   const doubled = [...items, ...items];
+
   return (
     <div 
-      className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white py-5 shadow-sm"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      ref={containerRef}
+      className="overflow-hidden rounded-[2rem] border border-neutral-200 bg-white py-5 shadow-sm cursor-grab active:cursor-grabbing"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onWheel={handleWheel}
     >
-      <div className={`marquee-track flex w-max items-center gap-6 px-6 ${isPaused ? 'paused' : ''}`}>
+      <div 
+        className="flex w-max items-center gap-6 px-6 transition-transform duration-100 ease-out"
+        style={{ transform: `translateX(-${offset}px)` }}
+      >
         {doubled.map((item, i) => (
           <span
             key={`${item.label}-${i}`}
-            className="inline-flex items-center gap-3 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-medium text-neutral-700 shadow-sm"
+            className="inline-flex items-center gap-3 rounded-full border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-medium text-neutral-700 shadow-sm pointer-events-none select-none"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
               {item.logo ? (
