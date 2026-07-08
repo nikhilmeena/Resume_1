@@ -13,21 +13,24 @@ import {
 } from 'lucide-react';
 import MS_OFFICE_LOGO from '@/assets/logos/ms-office.svg';
 import OPENSHIFT_LOGO from '@/assets/logos/openshift.svg';
+import RESUME_PDF from '@/assets/Nikhil_Kumar_Meena_Resume.pdf';
 import { cn } from '@/lib/utils';
 
 const AVATAR =
   'https://storage.googleapis.com/storage.magicpath.ai/user/411803889998901248/assets/51b8bd30-1661-443c-8b35-491983f07630.jpeg';
 const LINKEDIN = 'https://www.linkedin.com/in/nikhil-meena26';
-const EMAIL = 'nikhilmeenaiit@gmail.com';
+const EMAIL = 'nikhilmeena769@gmail.com';
 const PHONE = '+91 8800487634';
-// Set your resume link here when available (e.g. PDF URL). Leave empty for now.
-const RESUME_URL = '';
+const LOCATION = 'Financial District, Hyderabad';
+const RESUME_URL = RESUME_PDF;
+const RESUME_FILENAME = 'Nikhil_Kumar_Meena_Resume.pdf';
 
 const NAV = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'education', label: 'Education' },
   { id: 'work', label: 'Work' },
+  { id: 'certifications', label: 'Certifications' },
   { id: 'contact', label: 'Contact' },
 ] as const;
 
@@ -35,22 +38,22 @@ const BRANDS = ['ICICI Bank', 'IIT Delhi', 'IIT Kanpur', 'iMobile Pay', 'Fintech
 
 const SKILL_CARDS = [
   {
-    title: 'Payments & fintech product',
+    title: 'Product management',
     description:
-      'Fund transfer, UPI, beneficiary management, and transaction flows — from discovery through launch on platforms serving millions of users.',
-    tags: ['Fund Transfer', 'UPI', 'PRDs', 'Roadmapping'],
+      'Roadmapping, backlog prioritisation, user stories, and stakeholder management — driving Agile/Scrum delivery from discovery through production release.',
+    tags: ['Roadmapping', 'Agile/Scrum', 'User Stories', 'JIRA'],
   },
   {
-    title: 'Product & UX delivery',
+    title: 'Technical delivery',
     description:
-      'Wireframes to shipped features in Figma. User stories, acceptance criteria, and cross-functional delivery with engineering and design.',
-    tags: ['Figma', 'User Stories', 'Agile', 'JIRA'],
+      'REST APIs, Swagger/OpenAPI, and Postman testing across microservices deployed on Red Hat OpenShift.',
+    tags: ['REST APIs', 'Microservices', 'Red Hat OpenShift', 'Postman'],
   },
   {
-    title: 'Technical collaboration',
+    title: 'Domain expertise',
     description:
-      'APIs, microservices, and system design basics. Hands-on API testing with Postman and close partnership with backend teams.',
-    tags: ['APIs', 'Postman', 'Microservices', 'Python'],
+      'Payments and mobile banking — Funds transfer, NPCI/NBBL integrations, RBI compliance, and PII masking for products serving millions of customers.',
+    tags: ['Funds Transfer', 'Payments', 'NPCI/NBBL', 'RBI Compliance'],
   },
 ];
 
@@ -67,7 +70,6 @@ const SKILLS: Skill[] = [
   { label: 'Dynatrace', logo: 'https://cdn.simpleicons.org/dynatrace/00EAAB', fallback: 'Dy' },
   { label: 'Vulogx', fallback: 'Vx' },
   { label: 'OpenShift', logo: OPENSHIFT_LOGO, fallback: 'OS' },
-  { label: 'Docker', logo: 'https://cdn.simpleicons.org/docker/2496ED', fallback: 'Do' },
   { label: 'MS Office', logo: MS_OFFICE_LOGO, fallback: 'MS' },
   { label: 'Prompt Engineering', fallback: 'PE' },
   { label: 'Postman', logo: 'https://cdn.simpleicons.org/postman/FF6C37', fallback: 'PM' },
@@ -77,6 +79,60 @@ const SKILLS: Skill[] = [
   { label: 'Visual Studio Code', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg', fallback: 'VS' },
   { label: 'SQL', fallback: 'SQL' },
   { label: 'REST APIs', fallback: 'API' },
+  { label: 'Swagger/OpenAPI', logo: 'https://cdn.simpleicons.org/swagger/85EA2D', fallback: 'SW' },
+  { label: 'GitHub', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg', fallback: 'GH' },
+  { label: 'Linux', logo: 'https://cdn.simpleicons.org/linux/FCC624', fallback: 'Lx' },
+];
+
+type Experience = {
+  role: string;
+  period: string;
+  company: string;
+  points: string[];
+};
+
+const EXPERIENCE: Experience[] = [
+  {
+    role: 'Technical Product Manager',
+    period: 'April 2025 – Present',
+    company: 'ICICI Bank Ltd · iMobile Pay',
+    points: [
+      'Own strategic payment portfolio across Send Money, NBBL merchant integrations, and overseas fund transfer redirection — serving 10M+ iMobile Pay customers.',
+      'Delivered NPCI-compliant NBBL integrations enabling merchant payments through QR Scan and Intent-based flows, expanding payment acceptance capabilities on iMobile Pay.',
+      'Lead a team of 2 analysts and collaborate with 15+ engineers to drive product delivery, release governance, CI/CD adoption, and stakeholder management.',
+      'Manage RBI audit observations, security mandates, and PII data-masking initiatives, ensuring regulatory compliance and the secure handling of customer information.',
+    ],
+  },
+  {
+    role: 'Technical Analyst',
+    period: 'March 2023 – April 2025',
+    company: 'ICICI Bank Ltd · iMobile Pay',
+    points: [
+      'Owned the end-to-end Send Money module supporting 10M+ customers and ~15M monthly transactions across funds transfer, beneficiary management, authentication, transaction history, and limit management.',
+      'Managed delivery of Send Money enhancements across 31 sprints, leading backlog prioritisation, sprint planning, daily scrums, blocker resolution, and release sign-offs.',
+      'Defined and validated 35+ API integrations through BRS documents, Swagger reviews, Postman testing, and technical sign-offs for UAT, CUG, and Production releases.',
+      'Drove production stability through RCA and monitoring using Dynatrace and Vulogx, reducing Send Money dashboard latency from 3–4 seconds to under 1 second while maintaining <0.1% transaction failures.',
+    ],
+  },
+  {
+    role: 'Management Trainee',
+    period: 'July 2022 – March 2023',
+    company: 'ICICI Bank Ltd · iMobile Pay',
+    points: [
+      'Analysed business requirements for Send Money journeys in the iMobile Pay application.',
+      'Created 50+ user stories and acceptance criteria, facilitating discussions across business, design, and technology teams.',
+      'Conducted Figma walkthroughs to validate user journeys, identify gaps, and align requirements before development.',
+      'Defined API requirements by mapping UI needs with backend systems such as DEH, IMPS Switch, Core Banking Systems, Falcon, and Apigee Gateway.',
+    ],
+  },
+];
+
+const CERTIFICATIONS = [
+  { title: 'Testing Program L3', date: 'May 2026' },
+  { title: 'DevOps L3', date: 'Feb 2026' },
+  { title: 'Data Analytics & Data Visualization L2', date: 'Apr 2025' },
+  { title: 'Technology Architecture L2', date: 'Feb 2025' },
+  { title: 'Project Management Program', date: 'Jan 2025' },
 ];
 
 const ICICI_FOCUS_AREAS = [
@@ -236,18 +292,10 @@ function NavBar() {
         </button>
 
         <a
-          href={RESUME_URL || '#'}
-          download={!!RESUME_URL}
+          href={RESUME_URL}
+          download={RESUME_FILENAME}
           aria-label="Download resume"
-          onClick={(e) => {
-            if (!RESUME_URL) {
-              e.preventDefault();
-              // Placeholder behavior until resume link is provided
-              // You can replace this with a tooltip or modal later
-              alert('Resume link not set yet. Add RESUME_URL in the source to enable download.');
-            }
-          }}
-          className="hidden inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 md:inline-flex"
+          className="hidden items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 md:inline-flex"
         >
           <Download className="h-4 w-4" />
           Resume
@@ -266,6 +314,15 @@ function NavBar() {
               {item.label}
             </a>
           ))}
+          <a
+            href={RESUME_URL}
+            download={RESUME_FILENAME}
+            className="mt-1 inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800"
+            onClick={() => setOpen(false)}
+          >
+            <Download className="h-4 w-4" />
+            Download resume
+          </a>
         </nav>
       )}
     </header>
@@ -589,11 +646,20 @@ export function Portfolio() {
               <span className="text-neutral-400">specializing in payments and fintech.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
-              Technical Product Manager with experience in fintech payments and mobile banking.
-              I build scalable payment systems, APIs, and microservices — driving end-to-end product
-              development with cross-functional teams.
+              Technical Product Manager with 4+ years at ICICI Bank, building payment products for
+              10M+ users (~15M monthly transactions). IIT Delhi & IIT Kanpur graduate owning Send
+              Money, NBBL, and RBI compliance initiatives across 15+ engineers — from roadmap through
+              production release.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href={RESUME_URL}
+                download={RESUME_FILENAME}
+                className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
+              >
+                <Download className="h-4 w-4" />
+                Download resume
+              </a>
               <a
                 href="#about"
                 className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-800 transition hover:border-neutral-400"
@@ -774,6 +840,39 @@ export function Portfolio() {
           </div>
         </motion.div>
 
+        <motion.div {...fadeUp} className="mt-20">
+          <h3 className="text-center text-2xl font-bold tracking-tight text-neutral-900 md:text-3xl">
+            Experience timeline
+          </h3>
+          <div className="relative mt-12 space-y-10 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-px before:bg-neutral-200 md:before:left-1/2">
+            {EXPERIENCE.map((job, i) => (
+              <motion.article
+                key={job.role}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                className="relative pl-8 md:grid md:grid-cols-2 md:gap-12 md:pl-0"
+              >
+                <span className="absolute left-0 top-2 h-4 w-4 rounded-full border-2 border-white bg-neutral-900 shadow md:left-1/2 md:-translate-x-1/2" />
+                <div className={cn('md:text-right', i % 2 === 0 ? 'md:pr-12' : 'md:col-start-2 md:pl-12 md:text-left')}>
+                  <p className="text-sm font-medium text-neutral-500">{job.period}</p>
+                  <h4 className="mt-1 text-xl font-semibold text-neutral-900">{job.role}</h4>
+                  <p className="mt-1 text-sm text-neutral-600">{job.company}</p>
+                </div>
+                <div className={cn(i % 2 === 0 ? 'md:col-start-2 md:pl-12' : 'md:col-start-1 md:row-start-1 md:pr-12')}>
+                  <ul className="mt-4 space-y-3 md:mt-0">
+                    {job.points.map((point) => (
+                      <li key={point} className="flex gap-3 text-sm leading-relaxed text-neutral-600">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.div>
+
       </section>
 
       {/* Videos */}
@@ -821,11 +920,32 @@ export function Portfolio() {
         </motion.div>
       </section>
 
-      {/* Interests */}
-      <section className="border-y border-neutral-200 bg-neutral-50 py-16">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <p className="text-sm text-neutral-500 uppercase tracking-widest">Beyond work</p>
-          <p className="mt-3 text-xl text-neutral-700">Music · Fitness · Movies</p>
+      {/* Certifications */}
+      <section id="certifications" className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
+        <motion.div {...fadeUp} className="text-center mx-auto max-w-3xl">
+          <p className="text-sm font-medium tracking-widest text-neutral-400 uppercase">Training</p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
+            Training &amp; certifications
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-neutral-500">
+            Continuous upskilling across product, architecture, DevOps, and testing disciplines.
+          </p>
+        </motion.div>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CERTIFICATIONS.map((cert, i) => (
+            <motion.article
+              key={cert.title}
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className="flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 p-6 transition hover:border-neutral-300 hover:shadow-md"
+            >
+              <h3 className="text-base font-semibold text-neutral-900">{cert.title}</h3>
+              <span className="shrink-0 rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
+                {cert.date}
+              </span>
+            </motion.article>
+          ))}
         </div>
       </section>
 
@@ -859,7 +979,7 @@ export function Portfolio() {
               </li>
               <li className="flex items-center gap-3 text-neutral-700">
                 <MapPin className="h-5 w-5 text-neutral-400" />
-                Hyderabad, India
+                {LOCATION}
               </li>
               <li>
                 <a
